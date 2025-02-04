@@ -8,9 +8,9 @@ from flask_cors import CORS, cross_origin
 from flask_swagger_ui import get_swaggerui_blueprint
 
 # Carregando as operações mais pesadas antes de inicializar o servidor Flask.
-dataset = pd.read_csv('projeto_hjl/data/dataset_complaints.csv')
-embed = hub.load('projeto_hjl/data/models/unicode')
-model = jb.load('projeto_hjl/data/models/predict_complaints.joblib')
+dataset = pd.read_csv('predict-api/data/dataset_complaints.csv')
+embed = hub.load('predict-api/data/models/unicode')
+model = jb.load('predict-api/data/models/predict_complaints.joblib')
 
 
 
