@@ -2,16 +2,15 @@ from flask import Flask, jsonify, request
 import joblib as jb
 import tensorflow_text  
 import tensorflow_hub as hub
-import os
 import numpy as np
 import pandas as pd
 from flask_cors import CORS, cross_origin
 from flask_swagger_ui import get_swaggerui_blueprint
 
 # Carregando as operações mais pesadas antes de inicializar o servidor Flask.
-dataset = pd.read_csv('data/dataset_complaints.csv')
-embed = hub.load('data/models/unicode')
-model = jb.load('data/models/predict_complaints.joblib')
+dataset = pd.read_csv('predict-api/data/dataset_complaints.csv')
+embed = hub.load('predict-api/data/models/unicode')
+model = jb.load('predict-api/data/models/predict_complaints.joblib')
 
 
 
@@ -75,5 +74,4 @@ def prever():
     return jsonify({'problema_previsto': predicao.tolist()}), 200
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 5000))  # Usa a porta do Render ou 5000 localmente
-    app.run(host='0.0.0.0', port=port)
+    app.run()
