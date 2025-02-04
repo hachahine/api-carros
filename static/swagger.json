@@ -1,0 +1,90 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API de Diagnóstico de Problemas em Carros",
+    "description": "API que recebe dados relacionados ao carro e ao problema existente e retorna uma previsão do problema diagnosticado.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:5000",
+      "description": "Servidor local"
+    }
+  ],
+  "paths": {
+    "/prever": {
+      "post": {
+        "summary": "Diagnosticar problema no carro",
+        "description": "Recebe os detalhes do problema no carro e retorna uma previsão do problema diagnosticado.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "frase_usuario": {
+                    "type": "string",
+                    "description": "Descrição detalhada do problema pelo usuário.",
+                    "example": "Meu carro está com problema no ar condicionado."
+                  },
+                  "ano": {
+                    "type": "integer",
+                    "description": "Ano do veículo.",
+                    "example": 2020
+                  },
+                  "modelo_carro": {
+                    "type": "integer",
+                    "description": "Código numérico que representa o modelo do veículo.\nMapeamento baseado no label encoder do modelo de previsão:\n\n| Valor | Modelo do Carro |\n|-------|-----------------|\n| 0     | Azera           |\n| 1     | Civic           |\n| 2     | Renegade        |\n| 3     | Tucson          |\n\n**Importante**: O valor deve corresponder exatamente aos códigos numéricos mapeados acima.\n",
+                    "example": 3
+                  },
+                  "peca_problema": {
+                    "type": "integer",
+                    "description": "Código numérico que representa o problema mecânico identificado.\nMapeamento baseado no label encoder do modelo de previsão:\n\n| Valor | Descrição do Problema                  |\n|-------|----------------------------------------|\n| 0     | Alinhamento das rodas                 |\n| 1     | Atuadores da embreagem                |\n| 2     | Balaceamento das rodas                |\n| 3     | Bateria                              |\n| 4     | Cilindro da embreagem                |\n| 5     | Cilindro de ignição                  |\n| 6     | Compressor                           |\n| 7     | Condensador                          |\n| 8     | Correia da direção hidraulica        |\n| 9     | Correia de acessórios                |\n| 10    | Correia dentada                      |\n| 11    | Correia do alternador                |\n| 12    | Disco de embreagem                   |\n| 13    | Interruptor de ignição               |\n| 14    | Liquido de arrefecimento             |\n| 15    | Mola da embreagem                   |\n| 16    | Motor                               |\n| 17    | Pastilha de freio                   |\n| 18    | Polia do tensor                     |\n| 19    | Radiador                            |\n| 20    | Rotor de freio                      |\n| 21    | Sensores de coolant                 |\n| 22    | Solenoide da transmissão            |\n| 23    | Solenoide de torque                 |\n\n**Importante**: O valor deve corresponder exatamente aos códigos numéricos mapeados acima.\n",
+                    "example": 7
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Resposta de sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "problema_previsto": {
+                      "type": "string",
+                      "description": "Diagnóstico previsto com base na entrada.",
+                      "example": "Ar Condicionado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Detalhes do erro.",
+                      "example": "Parâmetros ausentes ou inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
