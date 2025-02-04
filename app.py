@@ -74,4 +74,4 @@ def prever():
     return jsonify({'problema_previsto': predicao.tolist()}), 200
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
