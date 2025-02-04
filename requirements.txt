@@ -6,3 +6,4 @@ numpy==2.2.2
 pandas==2.2.3
 tensorflow_hub==0.16.1
 tensorflow_text==2.10.0
+gunicorn==23.0.0
